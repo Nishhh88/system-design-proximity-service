@@ -14,3 +14,16 @@ AND
 
 **Efficiency** :
 The query is not efficient as the whole table will be scanned for this. Even if index is built on the longitude and latitude columns, the problem remains the presence of two dimentional data and data returned for each dimention would be huge and in order to obtain the correct data, an intersect operation needs to be performed between the two data sets. 
+
+The solution to the above problem would be to think to map the two dimentional data to one dimention. For which, different finds of indexes can be used as discussed in option 2, 3, 4 and 5.
+
+The chart below illustrates the different kinds of indexes:
+
+                                                          index
+                                                       /       \
+                                                      /         \
+                                                    /             \
+                                                  Hash            Tree
+                                          /      /                 \           \  
+                                        /       /                   \           \
+                                   Geohash     Even Grid            Google S2   Quadtree
