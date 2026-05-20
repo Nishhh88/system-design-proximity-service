@@ -45,5 +45,14 @@ For our user story, the level 4-6 would be accurate. But, this has some edge sce
 Geohashing guarantees that the longer a shared prefix is between two geohashes, the closer they are. However, the reverse is not true: two locations can be very close but not have any shared prefix at all. This will happen when two locations belong to different halves of the world but are still close as Earth is round. Because of this issue, a simple SQL query below would fail to fetch all nearby businesses.
 SELECT * FROM geohash_index WHERE geohash LIKE '9q8zn%';
 
+**Boundary Issue 2**
+Another issue would be that two businesses can have a long shared prefix, but belong to different geohashes. The solution would be to fetch the businesses not only from the current grid but also from the neighbors. The geohashes of the neighbors can be calculated in constant time.
+
+**Edge Scenario : Not enough businesses**
+What if there aren't enough businesses returned from the current grid and all the grids combined. 
+
+Option 1: Only return businesses within the radius, but if it doesn't return enough businesses, it does't satisfy user needs.
+Option 2: Increase the search radius, the last digit of the geohash can be removed and the new geohash can be used to search the nearby businesses. The process of removing the digit can continue until the desired result is obtained. 
+
 
                                         
