@@ -33,4 +33,29 @@ Pseudocode for building the quadtree:
     }
   }
 
-  
+# Data structure of each node
+
+Data stored:
+
+1) Data on leaf node
+
+   NAME                                                                     |   SIZE
+   Top left coordinates and botton right coordinates to identify the grid   |   32 bytes (8 * 4)
+   List of business IDs on the grid                                         |   8 bytes per ID  * 100 (maximal number of businesses                                                                                 |   allowed in one grid)
+   Total                                                                    |   832 bytes
+
+
+2) Data on internal node
+
+   NAME                                                                     |   SIZE
+   Top left coordinates and botton right coordinates to identify the grid   |   32 bytes (8 * 4)
+   Pointers to 4 children                                                   |   32
+   Total                                                                    |   64
+
+The number of businesses within a grid will be stored in a database. 
+
+# Memory Usage
+
+Each grid can store a maximum of 100 businesses, hence the number of leaf nodes : 200 million /100 = ~ 2 million
+Number of internal nodes = 2 million * 1/3 
+Therefore, total memory = 2 million * 832 bytes + 0.67 million * 64 bytes = ~ 1.71 gb
