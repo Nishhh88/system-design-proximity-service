@@ -33,7 +33,7 @@ Pseudocode for building the quadtree:
     }
   }
 
-# Data structure of each node
+**Data structure of each node**
 
 Data stored:
 
@@ -54,7 +54,7 @@ Data stored:
 
 The number of businesses within a grid will be stored in a database. 
 
-# Memory Usage
+**Memory Usage**
 
 Each grid can store a maximum of 100 businesses, hence the number of leaf nodes : 200 million /100 = ~ 2 million
 Number of internal nodes = 2 million * 1/3 
@@ -67,17 +67,17 @@ Therefore, a quad tree doesnt take a lot of memory and can fit in one server.
 Question : Is it ok to save quadtree in one server?
 Answer: No, depending on the read volume, a single quadtree server might not be enough to accomodate all the read requests. In that case, it would be better to spread the read load among multiple quadtree servers. 
 
-# Time Complexity to build a quadtree
+**Time Complexity to build a quadtree**
 
 To make the time complexity least, we will add one business to each node instead of counting the number of remaining businesses again and again. Basically, each time we check if the number of businesses in a node is greater than 100, we divide it. 
 
 So, the complexity becomes : n/100(log(n/100)) (As, one grid can have 100 businesses)
 
-# Getting nearby businesses with quadtree
+**Getting nearby businesses with quadtree**
 
 After building the quadtree, start search from the root and traverse according to the location required. Traverse until a node is reached with 100 businesses. If the leaf node contains feewer than 100 businesses, neighbouring nodes with until enough businesses are returned are called.
 
-# Operational Considerations of using Quad Tree for Production
+**Operational Considerations of using Quad Tree for Production**
 
 1) As showed, creating quadree for 200 million businesses might take few minutes at the server start-up time. Therefore, we need to consider the operational implications of the such start-up time. Therefore, a new release of the server should be roll out incrementally to a small subset of servers at a time. 
 
