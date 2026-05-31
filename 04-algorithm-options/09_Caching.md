@@ -15,3 +15,22 @@ If the location key coordinates are chosen as the cache key, it would have below
 
 **Type of data to Cache**
 There can be two types of data that can be chached: geohash, business_id
+
+* Caching the list of business Ids in a grid:
+  Since, the business data is relatively stable, the data for a geohash can be precomputed and stored in a key-value store such as Redis.
+
+  Below is an example for getting the nearby businesses with caching enabled:
+  1) Get the list of business Ids for a given geohash.
+     SELECT business_id FROM geohash_index WHERE geohash LIKE '{:geohash}%
+  2) Store the result in the Redis Cache if cache misses.
+     public List<String> getNearbyBusinessIds(String geohash) {
+       String cacheKey = hash(geohash);
+       List<String> listOfBusinessIds = Redis.get(cacheKey);
+       if(listOfBusinessIds == null) {
+         listOfBusinessIds = Run the select SQL query above;
+         Cache.set(cacheKey, listOfBusinessIds, "1d"); 
+     }
+      return listOfBusinessIds;   
+  }
+
+  
